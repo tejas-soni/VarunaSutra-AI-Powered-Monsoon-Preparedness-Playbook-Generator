@@ -119,7 +119,8 @@ export interface PlaybookSkeleton {
 /** The final playbook */
 export interface Playbook {
   title: string;
-  sections: PlaybookSection[];
+  sections?: PlaybookSection[]; // Deprecated in favor of markdownContent
+  markdownContent?: string;
   riskLevel: RiskLevel;
   language: SupportedLang;
   generatedAt: string;

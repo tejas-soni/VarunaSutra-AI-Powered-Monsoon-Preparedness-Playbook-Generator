@@ -80,6 +80,17 @@ describe('validateFamilyMember', () => {
     });
     expect(result.valid).toBe(false);
   });
+
+  it('rejects empty relationship', () => {
+    const result = validateFamilyMember({
+      name: 'Test',
+      age: 30,
+      gender: 'male',
+      relationship: '',
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Relationship is required');
+  });
 });
 
 describe('validateLocation', () => {
@@ -130,6 +141,45 @@ describe('validateLocation', () => {
     });
     expect(result.valid).toBe(false);
   });
+
+  it('rejects missing district', () => {
+    const result = validateLocation({
+      state: 'Maharashtra',
+      district: '',
+      city: 'Mumbai',
+      pincode: '400001',
+      housingType: 'apartment',
+      floorLevel: 'above',
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('District is required');
+  });
+
+  it('rejects missing city', () => {
+    const result = validateLocation({
+      state: 'Maharashtra',
+      district: 'Mumbai',
+      city: '',
+      pincode: '400001',
+      housingType: 'apartment',
+      floorLevel: 'above',
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('City is required');
+  });
+
+  it('rejects missing floor level', () => {
+    const result = validateLocation({
+      state: 'Maharashtra',
+      district: 'Mumbai',
+      city: 'Mumbai',
+      pincode: '400001',
+      housingType: 'apartment',
+      floorLevel: '' as 'above',
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Floor level is required');
+  });
 });
 
 describe('validatePreferences', () => {
@@ -146,6 +196,12 @@ describe('validatePreferences', () => {
   it('rejects negative budget', () => {
     const result = validatePreferences({ language: 'en', budget: -100 });
     expect(result.valid).toBe(false);
+  });
+
+  it('rejects invalid flood experience', () => {
+    const result = validatePreferences({ language: 'en', floodExperience: 'a lot' as 'none' });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Valid flood experience level is required');
   });
 });
 
@@ -211,5 +267,72 @@ describe('validatePlaybookInput', () => {
     });
     expect(result.valid).toBe(false);
     expect(result.errors).toContain('Location is required');
+  });
+
+  it('propagates member errors', () => {
+    const result = validatePlaybookInput({
+      familyMembers: [{ name: '', age: 30, gender: 'male', relationship: 'self' } as any],
+      location: {
+        state: 'MH',
+        district: 'Mumbai',
+        city: 'Mumbai',
+        pincode: '400001',
+        housingType: 'apartment',
+        floorLevel: 'above',
+      } as any,
+      preferences: { language: 'en' } as any,
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Member 1: Name is required');
+  });
+
+  it('propagates location errors', () => {
+    const result = validatePlaybookInput({
+      familyMembers: [{ name: 'Test', age: 30, gender: 'male', relationship: 'self' } as any],
+      location: {
+        state: '',
+        district: 'Mumbai',
+        city: 'Mumbai',
+        pincode: '400001',
+        housingType: 'apartment',
+        floorLevel: 'above',
+      } as any,
+      preferences: { language: 'en' } as any,
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('State is required');
+  });
+
+  it('propagates preference errors', () => {
+    const result = validatePlaybookInput({
+      familyMembers: [{ name: 'Test', age: 30, gender: 'male', relationship: 'self' } as any],
+      location: {
+        state: 'MH',
+        district: 'Mumbai',
+        city: 'Mumbai',
+        pincode: '400001',
+        housingType: 'apartment',
+        floorLevel: 'above',
+      } as any,
+      preferences: { language: 'invalid' as 'en' } as any,
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Valid language is required');
+  });
+
+  it('rejects missing preferences', () => {
+    const result = validatePlaybookInput({
+      familyMembers: [{ name: 'Test', age: 30, gender: 'male', relationship: 'self' } as any],
+      location: {
+        state: 'MH',
+        district: 'Mumbai',
+        city: 'Mumbai',
+        pincode: '400001',
+        housingType: 'apartment',
+        floorLevel: 'above',
+      } as any,
+    });
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Preferences are required');
   });
 });

@@ -35,9 +35,13 @@ describe('parseRainfall', () => {
     expect(parseRainfall('dry conditions')).toBe(0);
   });
 
-  it('returns 0 for empty/null input', () => {
+  it('returns 0 for missing or undefined text', () => {
     expect(parseRainfall('')).toBe(0);
-    expect(parseRainfall(null as unknown as string)).toBe(0);
+    expect(parseRainfall(null as any)).toBe(0);
+  });
+
+  it('returns 0 for completely unrecognized text', () => {
+    expect(parseRainfall('some random weather info with no keywords')).toBe(0);
   });
 });
 

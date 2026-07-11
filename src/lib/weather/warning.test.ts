@@ -64,6 +64,42 @@ describe('determineWarning', () => {
     };
     expect(determineWarning(forecast)).toBe('green');
   });
+
+  it('handles unknown warning colors gracefully', () => {
+    const forecast: ImdForecast = {
+      district: 'Mumbai',
+      state: 'MH',
+      days: [
+        {
+          date: '2023-01-01',
+          rainfallMm: 0,
+          tempMin: 0,
+          tempMax: 0,
+          warningLevel: 'unknown' as any,
+          description: '',
+        },
+      ],
+    };
+    expect(determineWarning(forecast)).toBe('green');
+  });
+
+  it('upgrades warning to yellow for moderate-heavy rainfall', () => {
+    const forecast: ImdForecast = {
+      district: 'Mumbai',
+      state: 'MH',
+      days: [
+        {
+          date: '2023-01-01',
+          rainfallMm: 70, // >= 64.5
+          tempMin: 0,
+          tempMax: 0,
+          warningLevel: 'green',
+          description: '',
+        },
+      ],
+    };
+    expect(determineWarning(forecast)).toBe('yellow');
+  });
 });
 
 describe('warningMessage', () => {
