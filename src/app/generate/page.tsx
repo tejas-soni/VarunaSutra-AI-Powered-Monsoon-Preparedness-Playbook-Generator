@@ -94,7 +94,7 @@ export default function GeneratePage() {
       <div className="max-w-3xl mx-auto bg-white dark:bg-slate-800 rounded-xl shadow-xl p-6 md:p-8">
         
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">Create Your Playbook</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Generate Your Playbook</h1>
           <div className="flex gap-2">
             {[1, 2, 3, 4].map(s => (
               <div key={s} className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-primary-light' : 'bg-slate-200 dark:bg-slate-700'}`} />
@@ -121,24 +121,24 @@ export default function GeneratePage() {
                   )}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-bold mb-1">Name</label>
-                      <input required type="text" value={member.name} onChange={e => updateFamilyMember(index, 'name', e.target.value)} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700" />
+                      <label className="block text-sm font-bold mb-1" htmlFor={`name-${index}`}>Name</label>
+                      <input id={`name-${index}`} required type="text" value={member.name} onChange={e => updateFamilyMember(index, 'name', e.target.value)} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold mb-1">Age</label>
-                      <input required type="number" min="0" max="120" value={member.age} onChange={e => updateFamilyMember(index, 'age', parseInt(e.target.value))} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700" />
+                      <label className="block text-sm font-bold mb-1" htmlFor={`age-${index}`}>Age</label>
+                      <input id={`age-${index}`} required type="number" min="0" max="120" value={member.age} onChange={e => updateFamilyMember(index, 'age', parseInt(e.target.value))} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold mb-1">Gender</label>
-                      <select value={member.gender} onChange={e => updateFamilyMember(index, 'gender', e.target.value as Gender)} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700">
+                      <label className="block text-sm font-bold mb-1" htmlFor={`gender-${index}`}>Gender</label>
+                      <select id={`gender-${index}`} value={member.gender} onChange={e => updateFamilyMember(index, 'gender', e.target.value as Gender)} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-bold mb-1">Relationship</label>
-                      <select value={member.relationship} onChange={e => updateFamilyMember(index, 'relationship', e.target.value)} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700">
+                      <label className="block text-sm font-bold mb-1" htmlFor={`relationship-${index}`}>Relationship</label>
+                      <select id={`relationship-${index}`} value={member.relationship} onChange={e => updateFamilyMember(index, 'relationship', e.target.value)} className="w-full p-2 rounded border dark:bg-slate-900 dark:border-slate-700">
                         {RELATIONSHIPS.map(r => <option key={r} value={r}>{r}</option>)}
                       </select>
                     </div>
