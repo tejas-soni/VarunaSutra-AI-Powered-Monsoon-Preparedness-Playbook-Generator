@@ -1,0 +1,25 @@
+// Copy to repo root. Requires: npm i -D @playwright/test @axe-core/playwright
+// Then: npx playwright install --with-deps chromium
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './e2e',
+  timeout: 30_000,
+  fullyParallel: true,
+  reporter: 'list',
+  use: {
+    baseURL: 'http://localhost:3000', // Vite: change to http://localhost:5173
+    trace: 'on-first-retry',
+  },
+  webServer: {
+    command: 'npm run preview', // Vite. For Next: 'npm run build && npm run start'
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+    timeout: 60_000,
+  },
+  projects: [
+    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
+    { name: 'mobile', use: { ...devices['Pixel 5'] } },
+  ],
+});
+
