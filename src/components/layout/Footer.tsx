@@ -7,9 +7,6 @@ export function Footer() {
         VarunaSutra &copy; {new Date().getFullYear()}. Built for PromptWars Monsoon Challenge.
       </p>
       <div className="mt-2 space-x-4">
-        <Link href="/methodology" className="text-sm text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm">
-          How it works
-        </Link>
       </div>
     </footer>
   );

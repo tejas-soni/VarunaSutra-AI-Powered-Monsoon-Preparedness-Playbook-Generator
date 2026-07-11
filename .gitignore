@@ -45,3 +45,9 @@ audit_report.json
 /test-results/
 /playwright-report/
 /blob-report/
+
+# project specific exclusions
+/hackathon-prep/
+AGENTS.md
+.agents/
+PLAN.md

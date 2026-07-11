@@ -9,12 +9,6 @@ export function Navbar() {
         <span className="text-xl font-bold tracking-wide">VarunaSutra</span>
       </Link>
       <div className="flex gap-4">
-        <Link 
-          href="/methodology" 
-          className="hover:text-accent-orange transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange rounded-md px-2 py-1"
-        >
-          Methodology
-        </Link>
       </div>
     </nav>
   );
