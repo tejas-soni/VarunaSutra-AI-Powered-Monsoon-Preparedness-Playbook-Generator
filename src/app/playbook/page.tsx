@@ -54,7 +54,7 @@ export default function PlaybookPage() {
 
       <div className="max-w-4xl mx-auto mt-8 p-4 md:p-8 bg-white dark:bg-slate-800 rounded-xl shadow-lg print:shadow-none print:p-0">
         {playbook.isAiEnriched ? (
-          <div className="markdown-body prose dark:prose-invert max-w-none">
+          <div className="markdown-body prose prose-slate prose-lg dark:prose-invert max-w-none prose-headings:text-primary dark:prose-headings:text-primary-light prose-a:text-accent-orange prose-li:marker:text-primary-light">
             {playbook.markdownContent ? (
               <ReactMarkdown>{playbook.markdownContent}</ReactMarkdown>
             ) : (
@@ -68,7 +68,7 @@ export default function PlaybookPage() {
             )}
           </div>
         ) : (
-          <div className="markdown-body prose dark:prose-invert max-w-none">
+          <div className="markdown-body prose prose-slate prose-lg dark:prose-invert max-w-none prose-headings:text-primary dark:prose-headings:text-primary-light prose-a:text-accent-orange prose-li:marker:text-primary-light">
             <div className="p-4 mb-6 bg-yellow-100 text-yellow-900 border-l-4 border-yellow-500">
               <strong>Offline / Fallback Mode:</strong> The AI system is currently unavailable. This is a basic template playbook.
             </div>
